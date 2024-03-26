@@ -15,7 +15,7 @@ public class PaperValidator implements Validator {
 		String title = paper.getTitle();
 		// title validation
 		if (!StringUtils.hasLength(title) || title.length()>175 || title.length()<3) {
-			errors.rejectValue("title", REQUIRED+" and between 3 and 50 characters", REQUIRED+" and between 3 and 50 character");
+			errors.rejectValue("title", REQUIRED+" and between 3 and 175 characters", REQUIRED+" and between 3 and 175 character");
 		}
 
 		// type validation
