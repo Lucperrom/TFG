@@ -13,13 +13,14 @@ import { userEditFormInputs } from "./form/userEditFormInputs";
 import "../../static/css/user/myPaperEdit.css";
 import "../../static/css/auth/authButton.css";
 import tokenService from "../../services/token.service";
-import useFetchState from "../../util/useFetchState";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-export default function UserProfile() {
+
+export default function EditProfile() {
     const user = tokenService.getUser();
     const jwt = tokenService.getLocalAccessToken();
+    const navigate = useNavigate();
   
     const emptyItem = {
       id: null,
@@ -46,7 +47,7 @@ export default function UserProfile() {
   
     async function setUpUser() {
       try {
-        const response = await fetch(`/api/v1/users/${userId}`, {
+        const response = await fetch(`https://tfm-m1dn.onrender.com/api/v1/users/${userId}`, {
           headers: {
           },
         });
@@ -101,7 +102,7 @@ export default function UserProfile() {
 
         console.log(myuser)
   
-        const response = await fetch(`/api/v1/users/${userId}`, {
+        const response = await fetch(`https://tfm-m1dn.onrender.com/api/v1/users/${userId}`, {
           method: "PUT",
           headers: {
             Accept: "application/json",
@@ -115,7 +116,7 @@ export default function UserProfile() {
           throw new Error(errorData.message);
         }
   
-        window.location.href = `/myProfile`;
+        navigate(0);
       } catch (error) {
         setMessage(error.message);
         setModalShow(true);

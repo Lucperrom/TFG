@@ -17,6 +17,7 @@ import useFetchState from "../../util/useFetchState";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { userEditFormInputs} from "./form/userEditFormInputs";
 import {userCreateFormInputs } from "./form/userCreateFormInputs";
+import { useNavigate } from 'react-router-dom';
 
 export default function UserEditAdmin() {
   let pathArray = window.location.pathname.split("/");
@@ -39,6 +40,7 @@ export default function UserEditAdmin() {
     const [isEdit, setIsEdit] = useState(false);
     const [authority, setAuthority] = useState([])
     const editUserFormRef = useRef();
+    const navigate = useNavigate();
   
     useEffect(() => {
       setUpUser();
@@ -47,7 +49,7 @@ export default function UserEditAdmin() {
     async function setUpUser() {
     if (pathArray[3] !== "new" && user.id==null){
       setIsEdit(true);
-      const user = fetch(`/api/v1/users/${pathArray[3]}`, {
+      const user = fetch(`https://tfm-m1dn.onrender.com/api/v1/users/${pathArray[3]}`, {
         headers: {
           Authorization: `Bearer ${tokenService.getLocalAccessToken()}`,
         },
@@ -70,7 +72,7 @@ export default function UserEditAdmin() {
 
     } 
     if(authority.length===0){
-      fetch(`/api/v1/users/authorities`, {
+      fetch(`https://tfm-m1dn.onrender.com/api/v1/users/authorities`, {
         headers: {
           Authorization: `Bearer ${tokenService.getLocalAccessToken()}`,
         },
@@ -133,7 +135,7 @@ export default function UserEditAdmin() {
         }
       }
 
-        const response = await (await fetch("/api/v1/users" + (user.id ? "/" + userId : ""),
+        const response = await (await fetch("https://tfm-m1dn.onrender.com/api/v1/users" + (user.id ? "/" + userId : ""),
 
         {
           method:  pathArray[3] === "new" ? "POST" : "PUT",
@@ -148,7 +150,7 @@ export default function UserEditAdmin() {
           setMessage(response.message);
           setModalShow(true);
         }
-        else window.location.href = `/users`;
+        else navigate(`/users`);
       }
   
     const title = (

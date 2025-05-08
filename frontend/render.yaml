@@ -1,0 +1,18 @@
+# Exported from Render on 2025-04-27T14:55:38Z
+services:
+- type: web
+  name: TFM-Pubus
+  runtime: docker
+  repo: https://github.com/Pubus-S-L/TFM
+  plan: free
+  envVars:
+  - key: OPENAI_API_KEY
+    sync: false
+  region: frankfurt
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+  rootDir: frontend
+  routes:
+    - source: '/*'
+      destination: /frontend/public/index.html
+version: "1"

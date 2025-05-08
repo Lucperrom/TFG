@@ -2,8 +2,11 @@
 
 # dependencies
 /node_modules
+/aaaaa
 /.pnp
 .pnp.js
+secret.json
+target/
 
 # testing
 /coverage

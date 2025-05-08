@@ -4,9 +4,11 @@ import tokenService from "../../services/token.service";
 import FormGenerator from "../../components/formGenerator/formGenerator";
 import { registerFormInputs } from "./form/registerFormInputs";
 import { useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
-  const registerFormRef = useRef();      
+  const registerFormRef = useRef();   
+  const navigate = useNavigate();   
   
   async function handleSubmit({ values }) {
 
@@ -15,7 +17,7 @@ export default function Register() {
     request["authority"] = 'user';
     let state = "";
 
-    fetch("/api/v1/auth/signup", {
+    fetch("https://tfm-m1dn.onrender.com/api/v1/auth/signup", {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(request),
@@ -26,7 +28,7 @@ export default function Register() {
           username: request.username,
           password: request.password,
         };
-        fetch("/api/v1/auth/signin", {
+        fetch("https://tfm-m1dn.onrender.com/api/v1/auth/signin", {
           headers: { "Content-Type": "application/json" },
           method: "POST",
           body: JSON.stringify(loginRequest),
@@ -45,7 +47,7 @@ export default function Register() {
           else {
             tokenService.setUser(data);
             tokenService.updateLocalAccessToken(data.token);
-            window.location.href = "/papers";
+            navigate(0);
           }
         })
         .catch((message) => {

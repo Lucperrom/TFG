@@ -14,12 +14,14 @@ import PrivateRoute from "./privateRoute";
 import UserPaperEdit from "./user/papers/myPaperEdit";
 import {UserPaperList} from "./user/papers/myPaperList";
 import UserDetail from "./public/users";
-import UserProfile from "./user/profile";
+import Profile from "./user/profile/page";
 import SwaggerDocs from "./public/swagger";
 import AboutUs from "./public/others/aboutUs";
 import LoginLinkedIn from "./auth/login/LinkedIn/loginLinkedin";
 import UserListAdmin from "./admin/users/UserListAdmin";
 import UserEditAdmin from "./admin/users/UserEditAdmin";
+import ChatList from "./public/users/room";
+import "./styles/globals.css";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -78,7 +80,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/myPapers" exact={true} element={<PrivateRoute><UserPaperList/></PrivateRoute>} />
         <Route path="/myPapers/:id" exact={true} element={<PrivateRoute><UserPaperEdit /></PrivateRoute>} /> 
-        <Route path="/myProfile" exact={true} element={<PrivateRoute><UserProfile /></PrivateRoute>} /> 
+        <Route path="/myProfile" exact={true} element={<PrivateRoute><Profile /></PrivateRoute>} /> 
         <Route path="/papers" exact={true} element={<Papers />} />
         <Route path="/papers/filtered/:search" exact={true} element={<Papers />} />
         <Route path="/papers/:id" exact={true} element={<PaperDetail />} />
@@ -86,6 +88,7 @@ function App() {
         <Route path="/admin/users/:id" exact={true} element={<UserEditAdmin />} />
         <Route path="/users/:id" exact={true} element={<UserDetail />} />
         <Route path="/about" exact={true} element={<AboutUs />} />
+        <Route path="/chats" exact={true} element={<ChatList />} />
       </>
     )
   }

@@ -1,21 +1,10 @@
 package org.springframework.samples.pubus.auth;
 
-import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
-
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.samples.pubus.auth.payload.request.LoginRequest;
 import org.springframework.samples.pubus.auth.payload.request.SignupRequest;
@@ -23,8 +12,6 @@ import org.springframework.samples.pubus.auth.payload.response.JwtResponse;
 import org.springframework.samples.pubus.auth.payload.response.MessageResponse;
 import org.springframework.samples.pubus.configuration.jwt.JwtUtils;
 import org.springframework.samples.pubus.configuration.services.UserDetailsImpl;
-import org.springframework.samples.pubus.exceptions.ResourceNotFoundException;
-import org.springframework.samples.pubus.user.User;
 import org.springframework.samples.pubus.user.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,19 +22,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.security.authentication.BadCredentialsException;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/auth")
 @Tag(name = "Authentication", description = "The Authentication API based on JWT")
@@ -193,14 +176,13 @@ public class AuthController {
 	}
 
 	
-	@PostMapping("/signup")	
+	@RequestMapping(value = "/signup", method = {RequestMethod.POST, RequestMethod.OPTIONS})
 	public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+		System.out.println("Signup request received: " + signUpRequest.getUsername());
 		if (userService.existsUser(signUpRequest.getUsername()).equals(true)) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
 		}
 		authService.createUser(signUpRequest);
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
-
-
 }

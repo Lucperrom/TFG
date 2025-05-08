@@ -4,34 +4,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.Mockito;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.samples.pubus.exceptions.ResourceNotFoundException;
-import org.springframework.util.StringUtils;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,15 +50,15 @@ public class PaperFileServiceImplTest {
         paper.setTitle("Sample Paper");
         paper.setPaperFiles(new ArrayList<>());
 
-        MultipartFile file = new MockMultipartFile(
-            "file", 
-            "testfile.pdf", 
-            "application/pdf", 
-            "test content".getBytes()
-        );
+        // MultipartFile file = new MockMultipartFile(
+        //     "file", 
+        //     "testfile.pdf", 
+        //     "application/pdf", 
+        //     "test content".getBytes()
+        // );
     }
 
-    private ResponseFile responseFile;
+    // private ResponseFile responseFile;
 
     @Test
     public void testSave() {

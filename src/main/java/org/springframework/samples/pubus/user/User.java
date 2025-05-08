@@ -3,16 +3,18 @@ package org.springframework.samples.pubus.user;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.samples.pubus.model.BaseEntity;
-import org.springframework.samples.pubus.paper.Paper;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,19 +37,31 @@ public class User extends BaseEntity {
 	@NotEmpty
 	protected String username;
 
-	String studies;
+	@OneToMany
+	List<Studies> studies;
 
-	String job;
+	@OneToOne
+	Job job;
 
 	@Column(unique = true)
 	String email;
 
 	String password;
 
+	String profilePicture;
+
+	@Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte[] profileImage;
+
+	private String profileImageType;
+
 	@NotNull
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "authority")
 	Authorities authority;
+
+	List<Integer> favorites = new ArrayList<>();
 
 
 }

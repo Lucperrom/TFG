@@ -6,10 +6,12 @@ import "../../static/css/auth/authButton.css";
 import { loginFormInputs } from "./form/loginFormInputs";
 import { useLinkedIn } from "./LinkedIn/useLinkedIn.tsx";
 import linkedin from "./LinkedIn/linkedin.png";
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [message, setMessage] = useState(null)
   const loginFormRef = React.createRef();
+  const navigate = useNavigate();
   const { linkedInLogin } = useLinkedIn({
     clientId: "77bspiilcaqccb",
     redirectUri: `http://localhost:3000/linkedInLogin`,    
@@ -22,7 +24,7 @@ export default function Login() {
   async function loginLinkedIn(code) {
     const reqBody = { code }; // Aquí estás creando el cuerpo de la solicitud con el código de autorización
     setMessage(null);
-    await fetch("/api/v1/auth/loginLinkedIn", {
+    await fetch("https://tfm-m1dn.onrender.com/api/v1/auth/loginLinkedIn", {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(reqBody),
@@ -34,7 +36,7 @@ export default function Login() {
       .then(function (data) {
         tokenService.setUser(data);
         tokenService.updateLocalAccessToken(data.token);
-        window.location.href = "/papers";
+        navigate(0);
       })
       .catch((error) => {         
         setMessage(error);
@@ -44,7 +46,7 @@ export default function Login() {
 
     const reqBody = values;
     setMessage(null);
-    await fetch("/api/v1/auth/signin", {
+    await fetch("https://tfm-m1dn.onrender.com/api/v1/auth/signin", {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(reqBody),
@@ -56,7 +58,7 @@ export default function Login() {
       .then(function (data) {
         tokenService.setUser(data);
         tokenService.updateLocalAccessToken(data.token);
-        window.location.href = "/papers";
+        navigate(0);
       })
       .catch((error) => {         
         setMessage(error);
